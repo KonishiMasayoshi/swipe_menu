@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>jQueryプラグイン - スワイプメニュー</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="./css/default.css">
+<!-- plugin -->
+<link rel="stylesheet" href="./plugin/default.css">
+<style>
+#menu_open_trigger{
+	width:40px;
+	height:40px;
+	background:#000;
+	border-radius:50%;
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	display:block;
+	cursor:pointer;
+	line-height:12px;
+	position:fixed;
+	top:7px;
+	right:10px;
+	z-index:0;
+}
+
+#menu_open_trigger > span, 
+#menu_open_trigger::before, 
+#menu_open_trigger::after{
+	width:20px;
+	height:2px;
+	margin:6px auto;
+	background:#FFF;
+	display:block;
+}
+
+#menu_open_trigger::before, 
+#menu_open_trigger::after{
+	content:"";
+}
+
+#menu_open_trigger::before{
+	margin-top:11px;
+}
+
+#swipe_menu_contents{
+	border:solid #333 3px;
+}
+
+.swipe_menu_contents_wrapper{
+	width:-webkit-calc(100% - 20px);
+	width:-moz-calc(100% - 20px);
+	width:calc(100% - 20px);
+	margin:0 10px;
+	text-align:left;
+}
+
+.swipe_menu_contents_section{
+	padding-bottom:30px;
+}
+
+.swipe_menu_contents_section:last-child{
+	padding-bottom:100px;
+}
+
+#swipe_menu_contents_header{
+	padding:25px 0;
+	margin-bottom:30px;
+	background:#CCC;
+}
+
+#swipe_menu_contents_contact_information{
+	font-size:20px;
+	line-height:30px;
+}
+
+#swipe_menu_contents_contact_information > p{
+	white-space:nowrap;
+	margin-bottom:5px;
+}
+
+#swipe_menu_contents_contact_information > p:last-child{
+	margin-bottom:0;
+}
+
+#swipe_menu_contents_contact_information > p > *{
+	vertical-align:middle;
+}
+
+#swipe_menu_contents_contact_information img{
+	width:20px;
+	height:auto;
+}
+
+#swipe_menu_contents_contact_information a{
+	display:inline-block;
+}
+
+.swipe_menu_contents_headline{
+	margin-bottom:15px;
+	font-size:16px;
+	line-height:22px;
+}
+
+.swipe_menu_contents_headline::before, 
+.swipe_menu_contents_headline::after{
+	content:"\25CF";
+	font-size:14px;
+	vertical-align:middle;
+	display:inline-block;
+}
+
+#swipe_menu_contents_navi li a{
+	font-size:16px;
+	line-height:22px;
+	letter-spacing:1.5px;
+	display:block;
+}
+
+#swipe_menu_contents_navi ul{
+	margin-bottom:20px;
+}
+
+#swipe_menu_contents_navi li{
+	margin-bottom:10px;
+}
+
+#swipe_menu_contents_navi li:last-child{
+	margin-bottom:0;
+}
+
+#swipe_menu_contents_navi li a::after{
+	content:"";
+	vertical-align:middle;
+	width:0;
+	height:0;
+	margin-left:2px;
+	border-top:solid transparent 8px;
+	border-left:solid #333 8px;
+	border-bottom:solid transparent 8px;
+	transform:scale(1, 0.7);
+	display:inline-block;
+}
+
+#swipe_menu_contents_navi .button{
+	display:block;
+}
+
+@media screen and (max-width:1000px){
+	#menu_open_trigger{
+		width:34px;
+		height:34px;
+		line-height:10px;
+	}
+	
+	#menu_open_trigger > span, 
+	#menu_open_trigger::before, 
+	#menu_open_trigger::after{
+		width:20px;
+		height:2px;
+		margin:5px auto;
+	}
+	
+	#menu_open_trigger::before{
+		margin-top:9px;
+	}
+}
+</style>
+</head>
+<body>
+	<span id="menu_open_trigger"><span></span></span>
+	
+	<!-- swipe_menu -->
+	<article id="swipe_menu">
+		<span id="swipe_menu_close_trigger"></span>
+		<div id="swipe_menu_contents">
+			<div id="swipe_menu_inner_parent">
+				<header id="swipe_menu_contents_header">
+					<h2 id="swipe_menu_headline">
+						メニュー一覧
+					</h2>
+				</header>
+				<section class="swipe_menu_contents_section">
+					<h3 class="swipe_menu_contents_headline">
+						CONTENTS
+					</h3>
+					<div class="swipe_menu_contents_wrapper">
+						<nav id="swipe_menu_contents_navi">
+							<ul>
+								<li>
+									<a href="#">
+										<span>メニュー1</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span>メニュー2</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span>メニュー3</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span>メニュー4</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span>メニュー5</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span>メニュー6</span>
+									</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</section>
+			</div>
+		</div>
+	</article>
+	<!-- /swipe_menu -->
+	
+	<!-- lib/jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+	<!-- plugin -->
+	<script src="./plugin/jquery.swipeMenu.js"></script>
+	
+	<script>
+(function($){
+	$(document).ready(function(){
+		const 
+		configs = {
+			eleMenuContents:$('#swipe_menu_contents'), 
+			eleOpenTrigger:$('#menu_open_trigger'), 
+			eleCloseTrigger:$('#swipe_menu_close_trigger') 
+		};
+		$('#swipe_menu').swipeMenu(configs);
+	});
+})(jQuery);
+	</script>
+</body>
+</html>
